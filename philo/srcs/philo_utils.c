@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/11/16 16:36:27 by bcoenon          ###   ########.fr       */
+/*   Created: 2022/11/15 16:13:59 by bcoenon           #+#    #+#             */
+/*   Updated: 2022/11/16 16:33:33 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
-# include <pthread.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/time.h>
-# include <unistd.h>
+#include "philo.h"
 
-typedef struct s_philo
+int	ft_atoi(char *str)
 {
-	pthread_mutex_t	fork;
-	int				time_to_eat;
-	int				time_to_die;
-	int				time_to_sleep;
-	int				lunches;
-	int				philo;
-}	t_philo;
+	int	i;
+	int	nb;
+	int	sign;
 
-int	ft_atoi(char *str);
-
-#endif
+	i = 0;
+	nb = 0;
+	sign = 1;
+	while (str[i] == ' ')
+		++i;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		++i;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nb = nb * 10 + str[i] - '0';
+		++i;
+	}
+	return (nb * sign);
+}
