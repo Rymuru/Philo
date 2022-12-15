@@ -12,46 +12,57 @@
 
 #include "philo.h"
 
-void	*ft_philo(void *dio)
+void	*ft_philo(void *arg)
 {
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->write);
 	printf("philo created\n");
 	sleep(3);
 	printf("philo died\n");
+	pthread_mutex_unlock(&philo->write);
+	return (arg);
 }
 
-void	*create_philo(t_philo dio)
+//void	*create_philo(t_philo dio)
+//{
+
+//}
+
+void init_dio(t_philo *dio, char **av)
 {
-
-}
-
-t_philo init_dio(char *nb_philo, char *die, char *eat, char *sleep)
-{
-	t_philo dio;
-
-	dio.philo = ft_atoi(nb_philo);
-	dio.time_to_die = ft_atoi(die);
-	dio.time_to_eat = ft_atoi(eat);
-	dio.time_to_sleep = ft_atoi(sleep);
-
-	return (dio);
+	dio->philo = ft_atoi(av[1]);
+	dio->time_to_die = ft_atoi(av[2]);
+	dio->time_to_eat = ft_atoi(av[3]);
+	dio->time_to_sleep = ft_atoi(av[4]);
+	if (av[5])
+		dio->lunches = ft_atoi(av[5]);
 }
 
 int	main(int ac, char **av)
-{.
-	int		philo;
-	char	*ecclesia;
-	t_philo	dio;
+{
+	int			philo;
+	pthread_t	*ecclesia;
+	t_philo		dio;
 
-	if (ac != 5 || ac != 6)
-		return (0);
-	dio = init_dio(av[1], av[2], av[3], av[4]);
+	if (ac != 5 && ac != 6)
+	{
+		printf("invalid number of arguments\n");
+		return (1);
+	}
+	if (is_all_num(av) == 1)
+	{
+		printf("not numbers\n");
+		return (1);
+	}
+	init_dio(&dio, av);
 	philo = ft_atoi(av[1]);
-	if (av[5])
-		dio.lunches = ft_atoi(av[5]);
 	ecclesia = malloc(philo * (sizeof(t_philo)));
 	while (philo > 0)
 	{
-		pthread_create(&ecclesia, NULL, &create_philo, &dio);
+		printf("test\n");
+		pthread_create(&ecclesia[philo], NULL, &ft_philo, &dio);
 		--philo;
 	}
 	//while (philo <= dio.philo)

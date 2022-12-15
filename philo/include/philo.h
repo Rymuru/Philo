@@ -21,6 +21,8 @@
 typedef struct s_philo
 {
 	pthread_mutex_t	fork;
+	pthread_mutex_t	death;
+	pthread_mutex_t	write;
 	int				time_to_eat;
 	int				time_to_die;
 	int				time_to_sleep;
@@ -29,5 +31,6 @@ typedef struct s_philo
 }	t_philo;
 
 int	ft_atoi(char *str);
+int	is_all_num(char **str);
 
 #endif

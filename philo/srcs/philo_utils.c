@@ -36,3 +36,23 @@ int	ft_atoi(char *str)
 	}
 	return (nb * sign);
 }
+
+int	is_all_num(char **str)
+{
+	int	line;
+	int	letter;
+
+	line = 1;
+	while (str[line])
+	{
+		letter = 0;
+		while (str[line][letter])
+		{
+			if (!(str[line][letter] >= '0' && str[line][letter] <= '9'))
+				return (1);
+			++letter;
+		}
+		++line;
+	}
+	return (0);
+}
