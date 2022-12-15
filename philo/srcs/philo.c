@@ -19,7 +19,9 @@ void	*ft_philo(void *arg)
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->write);
 	printf("philo created\n");
+	pthread_mutex_unlock(&philo->write);
 	sleep(3);
+	pthread_mutex_lock(&philo->write);
 	printf("philo died\n");
 	pthread_mutex_unlock(&philo->write);
 	return (arg);
@@ -38,6 +40,7 @@ void init_dio(t_philo *dio, char **av)
 	dio->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
 		dio->lunches = ft_atoi(av[5]);
+	pthread_mutex_init(&dio->write, NULL);
 }
 
 int	main(int ac, char **av)
@@ -61,12 +64,15 @@ int	main(int ac, char **av)
 	ecclesia = malloc(philo * (sizeof(t_philo)));
 	while (philo > 0)
 	{
-		printf("test\n");
+		//printf("test\n");
 		pthread_create(&ecclesia[philo], NULL, &ft_philo, &dio);
 		--philo;
 	}
-	//while (philo <= dio.philo)
-	//{
-	//	pthread_join()
-	//}
+	while (philo <= dio.philo)
+	{
+		pthread_join(ecclesia[philo], NULL);
+		++philo;
+	}
+	free(ecclesia);
+	return (0);
 }
