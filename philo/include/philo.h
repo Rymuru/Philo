@@ -18,6 +18,12 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+typedef struct s_data
+{
+	t_philo dio;
+	int		thread_id;
+}	t_data;
+
 typedef struct s_philo
 {
 	pthread_mutex_t	fork;
@@ -29,6 +35,7 @@ typedef struct s_philo
 	int				lunches;
 	int				philo;
 }	t_philo;
+
 
 int	ft_atoi(char *str);
 int	is_all_num(char **str);
