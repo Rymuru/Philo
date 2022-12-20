@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:29:20 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/11/18 17:02:56 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/20 21:21:41 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	*ft_philo(void *arg)
 	return (arg);
 }
 
-//void	*create_philo(t_philo dio)
-//{
+void	init_philo(t_philo *ecclesia)
+{
 
-//}
+}
 
 void init_dio(t_philo *dio, char **av)
 {
@@ -46,8 +46,9 @@ void init_dio(t_philo *dio, char **av)
 int	main(int ac, char **av)
 {
 	int			philo;
-	pthread_t	*ecclesia;
-	t_philo		dio;
+	pthread_t	*illiade;
+	t_data		data;
+
 
 	if (ac != 5 && ac != 6)
 	{
@@ -59,20 +60,22 @@ int	main(int ac, char **av)
 		printf("not numbers\n");
 		return (1);
 	}
-	init_dio(&dio, av);
+	init_dio(&data.dio, av);
 	philo = ft_atoi(av[1]);
-	ecclesia = malloc(philo * (sizeof(t_philo)));
+	illiade = malloc(philo * (sizeof(pthread_t)));
+	data.ecclesia = malloc(philo * (sizeof(t_philo)));
+	init_philo(data.ecclesia);
 	while (philo > 0)
 	{
-		//printf("test\n");
-		pthread_create(&ecclesia[philo], NULL, &ft_philo, &dio);
+		pthread_create(&illiade[philo], NULL, &ft_philo, &data);
 		--philo;
 	}
-	while (philo <= dio.philo)
+	while (philo <= data.dio.philo)
 	{
-		pthread_join(ecclesia[philo], NULL);
+		pthread_join(illiade[philo], NULL);
 		++philo;
 	}
-	free(ecclesia);
+	free(illiade);
+	free(data.ecclesia);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/11/16 16:36:27 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/20 21:01:55 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 typedef struct s_data
 {
 	t_philo dio;
-	int		thread_id;
+	t_philo	*ecclesia;
 }	t_data;
 
 typedef struct s_philo
@@ -34,6 +34,7 @@ typedef struct s_philo
 	int				time_to_sleep;
 	int				lunches;
 	int				philo;
+	int				thread_id;
 }	t_philo;
 
 
