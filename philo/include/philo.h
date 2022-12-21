@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/20 21:01:55 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/21 01:19:17 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-typedef struct s_data
-{
-	t_philo dio;
-	t_philo	*ecclesia;
-}	t_data;
 
 typedef struct s_philo
 {
@@ -37,6 +31,11 @@ typedef struct s_philo
 	int				thread_id;
 }	t_philo;
 
+typedef struct s_data
+{
+	t_philo dio;
+	t_philo	*ecclesia;
+}	t_data;
 
 int	ft_atoi(char *str);
 int	is_all_num(char **str);
