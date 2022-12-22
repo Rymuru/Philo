@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/22 06:57:34 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/22 07:34:47 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_philos(t_data *data)
 		data->ecclesia[current].thread_id = current;
 		data->ecclesia[current].lunches = 0;
 		pthread_mutex_init(&data->ecclesia[current].fork, NULL);
+		++current;
 	}
 }
 
