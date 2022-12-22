@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/22 03:51:09 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/22 04:02:20 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,12 @@ void	live(t_data *data, t_philo ari)
 	}
 }
 
-void *routine(void *data)
+void *routine(void *arg)
 {
-	data = (t_data *)data;
+	t_data *data;
+	
+	data = (t_data *)arg;
 
 	live(data, data->ecclesia[0]);
+	return (arg);
 }
