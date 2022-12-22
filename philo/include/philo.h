@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/22 03:52:05 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/22 07:05:34 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ typedef struct s_data
 {
 	int				philo;
 	int				death;
+	int				current;
 	int				time_to_eat;
 	int				time_to_die;
 	int				time_to_sleep;
 	int				lunches;
 	t_philo			*ecclesia;
 	pthread_mutex_t	write;
+	pthread_mutex_t lock;
 }	t_data;
 
 int	ft_atoi(char *str);

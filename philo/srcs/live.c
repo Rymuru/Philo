@@ -6,13 +6,13 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/22 04:02:20 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/22 07:06:05 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	first_lunch(t_data *data, t_philo ari)
+/*int	first_lunch(t_data *data, t_philo ari)
 {
 	if (ari.thread_id % 2 == 1)
 	{
@@ -39,14 +39,25 @@ void	live(t_data *data, t_philo ari)
 				
 		}
 	}
+}*/
+
+void	live(t_data *data, t_philo ari)
+{
+	pthread_mutex_lock(&data->write);
+	printf("thread %d started", ari.thread_id);
+	pthread_mutex_unlock(&data->write);
 }
 
 void *routine(void *arg)
 {
+	int		i;
 	t_data *data;
 	
 	data = (t_data *)arg;
-
-	live(data, data->ecclesia[0]);
+	pthread_mutex_lock(&data->lock);
+	i = data->current;
+	++data->current;
+	pthread_mutex_unlock(&data->lock);
+	live(data, data->ecclesia[i]);
 	return (arg);
 }

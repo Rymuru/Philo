@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/22 02:49:47 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/22 06:57:34 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_philos(t_data *data)
 int	init_data(t_data *data, char **av)
 {
 	data->death = 0;
+	data->current = 0;
 	data->philo = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
@@ -43,5 +44,6 @@ int	init_data(t_data *data, char **av)
 		return (1);
 	}
 	pthread_mutex_init(&data->write, NULL);
+	pthread_mutex_init(&data->lock, NULL);
 	return (0);
 }
