@@ -6,7 +6,7 @@
 #    By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/12 02:52:38 by bcoenon           #+#    #+#              #
-#    Updated: 2022/11/16 16:35:03 by bcoenon          ###   ########.fr        #
+#    Updated: 2022/12/22 02:29:40 by bcoenon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@
 SRCS_1	=	\
 			philo.c			\
 			philo_utils.c	\
-			
+			init_threads.c	\
+			init_data.c		\
+			live.c
 
 SRCSD	= srcs/
 
