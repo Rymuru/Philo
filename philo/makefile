@@ -6,7 +6,7 @@
 #    By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/12 02:52:38 by bcoenon           #+#    #+#              #
-#    Updated: 2022/12/22 02:29:40 by bcoenon          ###   ########.fr        #
+#    Updated: 2022/12/23 18:42:50 by bcoenon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,10 @@ INC = -I ./include
 
 NAME_1	= philo
 
-CC		= clang
+CC		= gcc
 RM		= rm -rf
 
-CFLAGS	= -g -Wall -Wextra -Werror
+CFLAGS	= -g -Wall -Wextra -Werror -g3
 
 # *======== RULES ========*
 
@@ -44,7 +44,7 @@ all:		${NAME_1}
 		@clang ${CFLAGS} ${INC} -c $< -o $(<:.c=.o)
 
 ${NAME_1}:	${OBJS_1}
-			${CC} ${INC} ${CFLAGS} ${OBJS_1} -o ${NAME_1}
+			${CC} ${INC} ${CFLAGS} ${OBJS_1} -o ${NAME_1} -lpthread
 
 clean:
 			${RM} ${OBJS_1}

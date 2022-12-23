@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:13:59 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/11/16 16:33:33 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/23 21:17:23 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,16 @@ int	is_all_num(char **str)
 		++line;
 	}
 	return (0);
+}
+
+uint64_t	ft_clock(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL) == -1)
+	{
+		write(2, "Error: gettimeofday error.\n", 28);
+		return (-1);
+	}
+	return ((tv.tv_usec / 1000) + (tv.tv_sec * 1000));
 }
