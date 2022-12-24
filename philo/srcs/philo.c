@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:29:20 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/22 02:32:08 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/24 03:11:35 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	check_arg(int ac, char **av)
 {
+	int	i;
+
+	i = 1;
 	if (ac != 5 && ac != 6)
 	{
 		printf("invalid number of arguments\n");
@@ -23,6 +26,14 @@ int	check_arg(int ac, char **av)
 	{
 		printf("not numbers\n");
 		return (1);
+	}
+	if (ft_atoi(av[i]) == 0)
+		return (1);
+	while (av[i])
+	{
+		if (ft_atoi(av[i]) > 2147483647)
+			return (1);
+		++i;
 	}
 	return (0);
 }

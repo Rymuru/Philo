@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/23 17:17:55 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/24 02:07:05 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ void	init_philos(t_data *data)
 	int	current;
 
 	current = 0;
-	while (current <= data->philo)
+	while (current < data->philo)
 	{
-		data->ecclesia[current].eat = 0;
 		data->ecclesia[current].thread_id = current;
 		data->ecclesia[current].lunches = 0;
 		pthread_mutex_init(&data->ecclesia[current].fork, NULL);
@@ -37,6 +36,8 @@ int	init_data(t_data *data, char **av)
 	data->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
 		data->lunches = ft_atoi(av[5]);
+	else
+		data->lunches = -1;
 	data->ecclesia = malloc(data->philo * (sizeof(t_philo)));
 	if (!data->ecclesia)
 	{
@@ -44,5 +45,6 @@ int	init_data(t_data *data, char **av)
 	}
 	pthread_mutex_init(&data->write, NULL);
 	pthread_mutex_init(&data->lock, NULL);
+	pthread_mutex_init(&data->watcher, NULL);
 	return (0);
 }

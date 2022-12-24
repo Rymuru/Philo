@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/23 21:36:06 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/24 03:12:44 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdint.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
-	int				eat;
 	int				thread_id;
 	int				lunches;
 	uint64_t		last_eat;
@@ -41,17 +41,19 @@ typedef struct s_data
 	t_philo			*ecclesia;
 	pthread_mutex_t	write;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	watcher;
 }	t_data;
 
-int			ft_atoi(char *str);
+uint64_t	ft_clock(void);
+uint64_t	ft_atoi(char *str);
 int			is_all_num(char **str);
 int			init_data(t_data *data, char **av);
-uint64_t	ft_clock(void);
+int			check_death(t_data *data, t_philo *ari);
 
-void		live(t_data *data, t_philo *ari);
 void		*ft_philo(void *data);
 void		*routine(void *data);
 void		init_philos(t_data *data);
 void		launch_threads(pthread_t *illiade, t_data data);
+void		protect_print(t_data *data, int thread_id, char *str);
 
 #endif
