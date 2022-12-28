@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/24 02:07:05 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/29 00:21:22 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ void	init_philos(t_data *data)
 	current = 0;
 	while (current < data->philo)
 	{
+		data->ecclesia[current].time_to_die = data->time_to_die;
+		data->ecclesia[current].time_to_eat = data->time_to_eat;
+		data->ecclesia[current].time_to_sleep = data->time_to_sleep;
 		data->ecclesia[current].thread_id = current;
 		data->ecclesia[current].lunches = 0;
 		pthread_mutex_init(&data->ecclesia[current].fork, NULL);
+		pthread_mutex_init(&data->ecclesia[current].eat, NULL);
 		++current;
 	}
 }
@@ -43,8 +47,10 @@ int	init_data(t_data *data, char **av)
 	{
 		return (1);
 	}
-	pthread_mutex_init(&data->write, NULL);
 	pthread_mutex_init(&data->lock, NULL);
+	pthread_mutex_init(&data->write, NULL);
+	pthread_mutex_init(&data->clock, NULL);
 	pthread_mutex_init(&data->watcher, NULL);
+	data->start = ft_clock(data);
 	return (0);
 }
