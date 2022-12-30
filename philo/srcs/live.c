@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/28 19:03:11 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/30 13:01:27 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	get_forks_pair(t_data *data, t_philo *ari)
 	protect_print(data, ari->thread_id, "has taken a fork");
 	if (data->philo == 1)
 	{
-		return(1);
+		return (1);
 	}
 	else
 	{
@@ -43,7 +43,7 @@ int	get_forks_impair(t_data *data, t_philo *ari)
 	return (0);
 }
 
-int get_forks(t_data *data, t_philo *ari)
+int	get_forks(t_data *data, t_philo *ari)
 {
 	if (ari->thread_id % 2 == 2)
 	{

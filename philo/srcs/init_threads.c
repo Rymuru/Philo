@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:18:29 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/29 00:23:25 by bcoenon          ###   ########.fr       */
+/*   Updated: 2022/12/30 13:00:50 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	check_death(t_data *data, t_philo *ari)
 		pthread_mutex_unlock(&ari->eat);
 		pthread_mutex_lock(&data->watcher);
 		pthread_mutex_lock(&data->write);
-		printf("%lu %d %s\n", ft_clock(data) - data->start, ari->thread_id, "died");
+		printf("%lu %d %s\n", ft_clock(data) - data->start,
+			ari->thread_id, "died");
 		data->death = 1;
 		pthread_mutex_unlock(&data->write);
 		pthread_mutex_unlock(&data->watcher);
@@ -33,10 +34,10 @@ int	check_death(t_data *data, t_philo *ari)
 
 int	hades(t_data *data)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(i < data->philo)
+	while (i < data->philo)
 	{
 		if (check_death(data, &data->ecclesia[i]) == 1)
 			return (1);
@@ -59,7 +60,8 @@ void	*routine(void *arg)
 	pthread_mutex_lock(&data->ecclesia[i].eat);
 	data->ecclesia[i].last_eat = ft_clock(data);
 	pthread_mutex_unlock(&data->ecclesia[i].eat);
-	while (is_someone_dead(data) == 0 && data->ecclesia[i].lunches != data->lunches)
+	while (is_someone_dead(data) == 0
+		&& data->ecclesia[i].lunches != data->lunches)
 	{
 		live(data, &data->ecclesia[i]);
 	}
@@ -74,14 +76,14 @@ void	launch_threads(pthread_t *illiade, t_data data)
 	while (philo < data.philo)
 	{
 		pthread_create(&illiade[philo], NULL, &routine, &data);
-		philo+= 2;
+		philo += 2;
 	}
 	usleep (200);
 	philo = 1;
 	while (philo < data.philo)
 	{
 		pthread_create(&illiade[philo], NULL, &routine, &data);
-		philo+= 2;
+		philo += 2;
 	}
 	while (hades(&data) != 1)
 	{
