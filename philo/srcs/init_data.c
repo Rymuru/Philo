@@ -6,28 +6,35 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/29 00:21:22 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/12 17:31:05 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_philos(t_data *data)
+void	*init_philos(t_data *data)
 {
-	int	current;
+	int		current;
+	t_philo	*ecclesia;
 
 	current = 0;
+	ecclesia = malloc(data->philo * (sizeof(t_philo)));
+	if (!ecclesia)
+	{
+		return (1);
+	}
 	while (current < data->philo)
 	{
-		data->ecclesia[current].time_to_die = data->time_to_die;
-		data->ecclesia[current].time_to_eat = data->time_to_eat;
-		data->ecclesia[current].time_to_sleep = data->time_to_sleep;
-		data->ecclesia[current].thread_id = current;
-		data->ecclesia[current].lunches = 0;
-		pthread_mutex_init(&data->ecclesia[current].fork, NULL);
-		pthread_mutex_init(&data->ecclesia[current].eat, NULL);
+		ecclesia[current].time_to_die = data->time_to_die;
+		ecclesia[current].time_to_eat = data->time_to_eat;
+		ecclesia[current].time_to_sleep = data->time_to_sleep;
+		ecclesia[current].thread_id = current;
+		ecclesia[current].lunches = 0;
+		pthread_mutex_init(&ecclesia[current].fork, NULL);
+		pthread_mutex_init(&ecclesia[current].eat, NULL);
 		++current;
 	}
+	return (ecclesia);
 }
 
 int	init_data(t_data *data, char **av)
@@ -42,11 +49,6 @@ int	init_data(t_data *data, char **av)
 		data->lunches = ft_atoi(av[5]);
 	else
 		data->lunches = -1;
-	data->ecclesia = malloc(data->philo * (sizeof(t_philo)));
-	if (!data->ecclesia)
-	{
-		return (1);
-	}
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->write, NULL);
 	pthread_mutex_init(&data->clock, NULL);

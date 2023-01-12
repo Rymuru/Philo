@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:18:29 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/30 13:00:50 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/12 17:37:37 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,21 @@ int	hades(t_data *data)
 void	*routine(void *arg)
 {
 	int		i;
-	t_data	*data;
+	t_philo	*philo;
 
-	data = (t_data *)arg;
-	pthread_mutex_lock(&data->lock);
-	i = data->current;
-	++data->current;
-	pthread_mutex_unlock(&data->lock);
-	pthread_mutex_lock(&data->ecclesia[i].eat);
-	data->ecclesia[i].last_eat = ft_clock(data);
-	pthread_mutex_unlock(&data->ecclesia[i].eat);
-	while (is_someone_dead(data) == 0
-		&& data->ecclesia[i].lunches != data->lunches)
+	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->eat);
+	philo->last_eat = ft_clock(&philo->data);
+	pthread_mutex_unlock(&philo->eat);
+	while (is_someone_dead(philo->data) == 0
+		&& philo->lunches != philo->data->lunches)
 	{
-		live(data, &data->ecclesia[i]);
+		live(philo->data, philo);
 	}
 	return (arg);
 }
 
-void	launch_threads(pthread_t *illiade, t_data data)
+void	launch_threads(pthread_t *illiade, t_data data, t_philo *ecclesia)
 {
 	int	philo;
 

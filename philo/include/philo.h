@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/12 16:36:14 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/12 17:38:21 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ typedef struct s_philo
 	t_data			*data;
 	uint64_t		last_eat;
 	uint64_t		sleep;
+	uint64_t		time_to_eat;
+	uint64_t		time_to_die;
+	uint64_t		time_to_sleep;
 	pthread_mutex_t	fork;
+	pthread_mutex_t	eat;
 }	t_philo;
 
-uint64_t	ft_clock(void);
+uint64_t	ft_clock(t_data *data);
 uint64_t	ft_atoi(char *str);
 int			is_all_num(char **str);
 int			init_data(t_data *data, char **av);
@@ -52,8 +56,8 @@ int			check_death(t_data *data, t_philo *ari);
 
 void		*ft_philo(void *data);
 void		*routine(void *data);
-void		init_philos(t_data *data);
-void		launch_threads(pthread_t *illiade, t_data data);
+void		*init_philos(t_data *data);
+void		launch_threads(pthread_t *illiade, t_data data, t_philo *ecclesia);
 void		protect_print(t_data *data, int thread_id, char *str);
 
 #endif
