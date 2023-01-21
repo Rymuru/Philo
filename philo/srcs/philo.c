@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:29:20 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/12 17:31:58 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/21 19:13:14 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	main(int ac, char **av)
 	}
 	if (init_data(&data, av) == 1)
 		return (1);
+	ecclesia = init_philos(&data);
 	illiade = malloc(data.philo * (sizeof(pthread_t)));
 	if (!illiade)
 	{
 		free(ecclesia);
 		return (1);
 	}
-	ecclesia = init_philos(&data);
 	launch_threads(illiade, data, ecclesia);
 	free(illiade);
 	free(ecclesia);

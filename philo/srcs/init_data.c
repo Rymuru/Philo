@@ -6,11 +6,20 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/12 17:31:05 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/21 19:12:57 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	init_right_fork(t_philo *ecclesia, int current)
+{
+	ecclesia[current].right_fork = &ecclesia[0].left_fork;
+	while (current >= 0)
+	{
+		ecclesia[current].right_fork = &ecclesia[current + 1].left_fork;
+	}
+}
 
 void	*init_philos(t_data *data)
 {
@@ -21,7 +30,7 @@ void	*init_philos(t_data *data)
 	ecclesia = malloc(data->philo * (sizeof(t_philo)));
 	if (!ecclesia)
 	{
-		return (1);
+		return (NULL);
 	}
 	while (current < data->philo)
 	{
@@ -30,10 +39,11 @@ void	*init_philos(t_data *data)
 		ecclesia[current].time_to_sleep = data->time_to_sleep;
 		ecclesia[current].thread_id = current;
 		ecclesia[current].lunches = 0;
-		pthread_mutex_init(&ecclesia[current].fork, NULL);
+		pthread_mutex_init(&ecclesia[current].left_fork, NULL);	
 		pthread_mutex_init(&ecclesia[current].eat, NULL);
 		++current;
 	}
+	init_right_fork(ecclesia, current - 1);
 	return (ecclesia);
 }
 
@@ -49,10 +59,11 @@ int	init_data(t_data *data, char **av)
 		data->lunches = ft_atoi(av[5]);
 	else
 		data->lunches = -1;
+	data->start = ft_clock();
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->write, NULL);
-	pthread_mutex_init(&data->clock, NULL);
+	//pthread_mutex_init(&data->clock, NULL);
 	pthread_mutex_init(&data->watcher, NULL);
-	data->start = ft_clock(data);
+	//data->start = ft_clock(data);
 	return (0);
 }

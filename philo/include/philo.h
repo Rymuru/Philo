@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/12 17:38:21 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/21 19:16:22 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_data
 	int				death;
 	int				current;
 	int				lunches;
+	uint64_t		start;
 	uint64_t		time_to_eat;
 	uint64_t		time_to_die;
 	uint64_t		time_to_sleep;
@@ -38,25 +39,29 @@ typedef struct s_philo
 {
 	int				thread_id;
 	int				lunches;
+	void			*right_fork;
 	t_data			*data;
 	uint64_t		last_eat;
 	uint64_t		sleep;
 	uint64_t		time_to_eat;
 	uint64_t		time_to_die;
 	uint64_t		time_to_sleep;
-	pthread_mutex_t	fork;
+	pthread_mutex_t	left_fork;	
 	pthread_mutex_t	eat;
 }	t_philo;
 
-uint64_t	ft_clock(t_data *data);
+uint64_t	ft_clock(void);
 uint64_t	ft_atoi(char *str);
+
 int			is_all_num(char **str);
 int			init_data(t_data *data, char **av);
+int			is_someone_dead(t_data *data);
 int			check_death(t_data *data, t_philo *ari);
 
+void		*routine(void *arg);
 void		*ft_philo(void *data);
-void		*routine(void *data);
 void		*init_philos(t_data *data);
+
 void		launch_threads(pthread_t *illiade, t_data data, t_philo *ecclesia);
 void		protect_print(t_data *data, int thread_id, char *str);
 

@@ -6,26 +6,34 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/12 16:45:59 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/21 19:17:26 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	ft_eat(t_philo *ari)
+{
+	pthread_mutex_lock(&ari->left_fork);
+	protect_print(ari->data, ari->thread_id, "has taken a fork");
+	pthread_mutex_lock(ari->right_fork);
+	protect_print(ari->data, ari->thread_id, "has taken a fork");
+	protect_print(ari->data, ari->thread_id, "is eating");
+	usleep(ari->time_to_sleep);
+	pthread_mutex_unlock(&ari->left_fork);
+	pthread_mutex_unlock(ari->right_fork);
+	return (0);
+}
+
 int	live(t_philo *ari)
 {
-	check_death(ari->data, ari);
 	if (ari->thread_id % 2 == 0 != ari->lunches != 0)
-		//lunch(data, ari);
+		ft_eat(ari);
 	if (ari->data->death == 0)
 	{
 		ari->sleep = ft_clock();
 		protect_print(ari->data, ari->thread_id, "is sleeping");
-		while (ft_clock() - ari->sleep <= ari->data->time_to_sleep)
-		{
-			if (ft_clock() - ari->last_eat > ari->data->time_to_die)
-				check_death(ari->data, ari);
-		}
+		usleep(ari->time_to_sleep);
 		protect_print(ari->data, ari->thread_id, "is thinking");
 	}
 	return (0);
@@ -33,13 +41,18 @@ int	live(t_philo *ari)
 
 void	*routine(void *arg)
 {
-	int		i;
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->eat);
 	philo->last_eat = ft_clock();
-	while (philo->data->death == 0 && philo->lunches != philo->data->lunches)
+	pthread_mutex_unlock(&philo->eat);
+	if (philo->thread_id % 2 == 1)
+		usleep(philo->time_to_eat / 2);
+	while (is_someone_dead(philo->data) == 0
+		&& philo->lunches != philo->data->lunches)
+	{
 		live(philo);
- 	philo->data->death = 1;
+	}
 	return (arg);
 }

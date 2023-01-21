@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:13:59 by bcoenon           #+#    #+#             */
-/*   Updated: 2022/12/29 00:21:09 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/21 19:07:05 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,16 @@ int	is_all_num(char **str)
 	return (0);
 }
 
-uint64_t	ft_clock(t_data *data)
+uint64_t	ft_clock(void)
 {
 	struct timeval	tv;
 
-	pthread_mutex_lock(&data->clock);
 	if (gettimeofday(&tv, NULL) == -1)
 	{
-		pthread_mutex_unlock(&data->clock);
 		write(2, "Error: gettimeofday error.\n", 28);
 		return (-1);
 	}
-	pthread_mutex_unlock(&data->clock);
 	return ((tv.tv_usec / 1000) + (tv.tv_sec * 1000));
-}
-
-void	protect_print(t_data *data, int thread_id, char *str)
-{
-	pthread_mutex_lock(&data->write);
-	if (is_someone_dead(data) == 0)
-		printf("%lu %d %s\n", ft_clock(data) - data->start, thread_id, str);
-	pthread_mutex_unlock(&data->write);
 }
 
 int	is_someone_dead(t_data *data)
@@ -90,4 +79,12 @@ int	is_someone_dead(t_data *data)
 	}
 	pthread_mutex_unlock(&data->watcher);
 	return (0);
+}
+
+void	protect_print(t_data *data, int thread_id, char *str)
+{
+	pthread_mutex_lock(&data->write);
+	if (is_someone_dead(data) == 0)
+		printf("%lu %d %s\n", ft_clock() - data->start, thread_id, str);
+	pthread_mutex_unlock(&data->write);
 }
