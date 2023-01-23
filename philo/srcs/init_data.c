@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/23 14:59:09 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/23 18:25:27 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	*init_philos(t_data *data)
 		pthread_mutex_init(&ecclesia[current].eat, NULL);
 		++current;
 	}
-	//--current;
 	init_right_fork(ecclesia, current - 1);
 	return (ecclesia);
 }
@@ -66,8 +65,6 @@ int	init_data(t_data *data, char **av)
 	data->start = ft_clock();
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->write, NULL);
-	//pthread_mutex_init(&data->clock, NULL);
 	pthread_mutex_init(&data->watcher, NULL);
-	//data->start = ft_clock(data);
 	return (0);
 }

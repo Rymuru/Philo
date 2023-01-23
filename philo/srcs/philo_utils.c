@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:13:59 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/21 19:07:05 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/23 18:22:30 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ int	is_someone_dead(t_data *data)
 	pthread_mutex_lock(&data->watcher);
 	if (data->death == 1)
 	{
+		//pthread_mutex_lock(&data->write);
+		//printf("il y a un mort\n");
+		//pthread_mutex_unlock(&data->write);
 		pthread_mutex_unlock(&data->watcher);
 		return (1);
 	}

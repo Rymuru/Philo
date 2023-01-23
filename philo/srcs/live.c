@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/21 19:17:26 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/23 18:00:13 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	ft_eat(t_philo *ari)
 	pthread_mutex_lock(ari->right_fork);
 	protect_print(ari->data, ari->thread_id, "has taken a fork");
 	protect_print(ari->data, ari->thread_id, "is eating");
-	usleep(ari->time_to_sleep);
+	usleep(ari->time_to_sleep * 1000);
+	ari->lunches++;
 	pthread_mutex_unlock(&ari->left_fork);
 	pthread_mutex_unlock(ari->right_fork);
 	return (0);
@@ -27,13 +28,12 @@ int	ft_eat(t_philo *ari)
 
 int	live(t_philo *ari)
 {
-	if (ari->thread_id % 2 == 0 != ari->lunches != 0)
-		ft_eat(ari);
+	ft_eat(ari);
 	if (ari->data->death == 0)
 	{
 		ari->sleep = ft_clock();
 		protect_print(ari->data, ari->thread_id, "is sleeping");
-		usleep(ari->time_to_sleep);
+		usleep(ari->time_to_sleep * 1000);
 		protect_print(ari->data, ari->thread_id, "is thinking");
 	}
 	return (0);
