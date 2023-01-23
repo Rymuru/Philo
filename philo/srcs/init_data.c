@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/21 19:12:57 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/23 13:08:04 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 void	init_right_fork(t_philo *ecclesia, int current)
 {
 	ecclesia[current].right_fork = &ecclesia[0].left_fork;
+	--current;
 	while (current >= 0)
 	{
 		ecclesia[current].right_fork = &ecclesia[current + 1].left_fork;
+		--current;
 	}
 }
 
@@ -43,6 +45,7 @@ void	*init_philos(t_data *data)
 		pthread_mutex_init(&ecclesia[current].eat, NULL);
 		++current;
 	}
+	--current;
 	init_right_fork(ecclesia, current - 1);
 	return (ecclesia);
 }
