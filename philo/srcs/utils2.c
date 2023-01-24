@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:11:26 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 15:28:53 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 16:24:55 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_someone_dead(t_data *data)
 
 void	ft_sleep(uint64_t delay)
 {
-	uint64_t start;
+	uint64_t	start;
 
 	start = ft_clock();
 	while (ft_clock() - start < delay)

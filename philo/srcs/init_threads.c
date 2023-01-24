@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:18:29 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 15:33:36 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 15:48:54 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	launch_threads(pthread_t *illiade, t_data *data, t_philo *ecclesia)
 	usleep(500);
 	while (hades(data, ecclesia) != 1)
 	{
-		usleep(500);
+		usleep(100);
 	}
 	philo = 0;
 	while (philo < data->philo)
