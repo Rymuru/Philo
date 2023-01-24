@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 21:12:32 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 22:34:31 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int	ft_eat(t_philo *ari)
 		protect_print(ari->data, ari->thread_id, "is eating");
 		ari->last_eat = ft_clock();
 		ft_sleep(ari->time_to_eat);
+		pthread_mutex_lock(&ari->lunches_p);
 		ari->lunches++;
+		pthread_mutex_unlock(&ari->lunches_p);
 		pthread_mutex_unlock(ari->right_fork);
 	}
 	else
@@ -53,7 +55,7 @@ void	*routine(void *arg)
 	philo->last_eat = ft_clock();
 	pthread_mutex_unlock(&philo->eat);
 	if (philo->thread_id % 2 == 1)
-		usleep(philo->time_to_eat / 2);
+		usleep((philo->time_to_eat / 2) * 100);
 	while (is_someone_dead(philo->data) == 0
 		&& philo->lunches != philo->data->lunches)
 	{

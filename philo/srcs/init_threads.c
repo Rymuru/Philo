@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:18:29 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 21:01:16 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 22:42:51 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,23 @@ int	hades(t_data *data, t_philo *ecclesia)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&ecclesia[i].lunches_p);
+	while (ecclesia[i].lunches == data->lunches)
+	{
+		pthread_mutex_unlock(&ecclesia[i].lunches_p);
+		++i;
+		if (i == data->philo)
+			return (1);
+		pthread_mutex_lock(&ecclesia[i].lunches_p);
+	}
+	pthread_mutex_unlock(&ecclesia[i].lunches_p);
+	i = 0;
 	while (i < data->philo)
 	{
 		if (check_death(data, &ecclesia[i]) == 1)
 			return (1);
 		++i;
 	}
-	//while (ecclesia[i].lunches == data->lunches)
-	//{
-	//	++i;
-	//	if (i == data->philo)
-	//		return (1);
-	//}
 	return (0);
 }
 
