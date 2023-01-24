@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:18:29 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 17:02:53 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 21:01:16 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int	hades(t_data *data, t_philo *ecclesia)
 			return (1);
 		++i;
 	}
+	//while (ecclesia[i].lunches == data->lunches)
+	//{
+	//	++i;
+	//	if (i == data->philo)
+	//		return (1);
+	//}
 	return (0);
 }
 
