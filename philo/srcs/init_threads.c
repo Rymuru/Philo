@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:18:29 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 15:48:54 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 17:02:53 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	hades(t_data *data, t_philo *ecclesia)
 			return (1);
 		++i;
 	}
-	i = 0;
 	return (0);
 }
 
@@ -37,7 +36,7 @@ void	launch_threads(pthread_t *illiade, t_data *data, t_philo *ecclesia)
 		pthread_create(&illiade[philo], NULL, &routine, &ecclesia[philo]);
 		++philo;
 	}
-	usleep(500);
+	ft_sleep(data->time_to_die - 10);
 	while (hades(data, ecclesia) != 1)
 	{
 		usleep(100);
