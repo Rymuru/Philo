@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/21 19:16:22 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 14:32:26 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		*routine(void *arg);
 void		*ft_philo(void *data);
 void		*init_philos(t_data *data);
 
-void		launch_threads(pthread_t *illiade, t_data data, t_philo *ecclesia);
+void		launch_threads(pthread_t *illiade, t_data *data, t_philo *ecclesia);
 void		protect_print(t_data *data, int thread_id, char *str);
 
 #endif

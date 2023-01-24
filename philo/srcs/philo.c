@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:29:20 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/21 19:13:14 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 14:31:33 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int ac, char **av)
 		free(ecclesia);
 		return (1);
 	}
-	launch_threads(illiade, data, ecclesia);
+	launch_threads(illiade, &data, ecclesia);
 	free(illiade);
 	free(ecclesia);
 	return (0);
