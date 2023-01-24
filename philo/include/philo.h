@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:52:16 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 22:33:36 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 22:53:00 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_philo
 	uint64_t		time_to_sleep;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	left_fork;
-	pthread_mutex_t lunches_p;
+	pthread_mutex_t	lunches_p;
 	pthread_mutex_t	eat;
 }	t_philo;
 
