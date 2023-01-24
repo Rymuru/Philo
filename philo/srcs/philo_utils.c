@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:13:59 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 14:46:24 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/24 15:12:44 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,6 @@ uint64_t	ft_clock(void)
 		return (-1);
 	}
 	return ((tv.tv_usec / 1000) + (tv.tv_sec * 1000));
-}
-
-int	is_someone_dead(t_data *data)
-{
-	pthread_mutex_lock(&data->watcher);
-	if (data->death == 1)
-	{
-		pthread_mutex_unlock(&data->watcher);
-		return (1);
-	}
-	pthread_mutex_unlock(&data->watcher);
-	return (0);
 }
 
 void	protect_print(t_data *data, int thread_id, char *str)
