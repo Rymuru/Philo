@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:11:26 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 21:11:56 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/25 16:27:33 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	check_death(t_data *data, t_philo *ari)
 	{
 		pthread_mutex_unlock(&ari->eat);
 		pthread_mutex_lock(&data->watcher);
+		data->death = 1;
+		pthread_mutex_unlock(&data->watcher);
 		pthread_mutex_lock(&data->write);
 		printf("%lu %d %s\n", ft_clock() - data->start,
 			ari->thread_id, "died");
-		data->death = 1;
 		pthread_mutex_unlock(&data->write);
-		pthread_mutex_unlock(&data->watcher);
 		return (1);
 	}
 	else

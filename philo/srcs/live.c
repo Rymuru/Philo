@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 22:34:31 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/25 17:08:03 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->data->lock);
+	pthread_mutex_unlock(&philo->data->lock);
 	pthread_mutex_lock(&philo->eat);
 	philo->last_eat = ft_clock();
 	pthread_mutex_unlock(&philo->eat);
