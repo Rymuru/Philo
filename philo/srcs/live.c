@@ -6,31 +6,62 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/25 17:08:03 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/27 19:11:29 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_eat(t_philo *ari)
+void	lock_forks(t_philo *phi)
 {
-	pthread_mutex_lock(&ari->left_fork);
-	protect_print(ari->data, ari->thread_id, "has taken a fork");
-	if (ari->data->philo != 1)
+	if (phi->thread_id % 2 == 0)
 	{
-		pthread_mutex_lock(ari->right_fork);
-		protect_print(ari->data, ari->thread_id, "has taken a fork");
-		protect_print(ari->data, ari->thread_id, "is eating");
-		ari->last_eat = ft_clock();
-		ft_sleep(ari->time_to_eat);
-		pthread_mutex_lock(&ari->lunches_p);
-		ari->lunches++;
-		pthread_mutex_unlock(&ari->lunches_p);
-		pthread_mutex_unlock(ari->right_fork);
+		pthread_mutex_lock(phi->right_fork);
+		protect_print(phi->data, phi->thread_id, "has taken a fork");
+		pthread_mutex_lock(&phi->left_fork);
 	}
 	else
+	{
+		pthread_mutex_lock(&phi->left_fork);
+		protect_print(phi->data, phi->thread_id, "has taken a fork");
+		pthread_mutex_lock(phi->right_fork);
+	}
+}
+
+void	unlock_forks(t_philo *phi)
+{
+	if (phi->thread_id % 2 == 0)
+	{
+		pthread_mutex_unlock(&phi->left_fork);
+		pthread_mutex_unlock(phi->right_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(phi->right_fork);
+		pthread_mutex_unlock(&phi->left_fork);
+	}
+}
+
+int	ft_eat(t_philo *ari)
+{
+	if (ari->data->philo == 1)
+	{
+		pthread_mutex_lock(&ari->left_fork);
+		protect_print(ari->data, ari->thread_id, "has taken a fork");
 		ft_sleep(ari->time_to_die + 10);
-	pthread_mutex_unlock(&ari->left_fork);
+		pthread_mutex_unlock(&ari->left_fork);
+		return (0);
+	}
+	lock_forks(ari);
+	protect_print(ari->data, ari->thread_id, "is eating");
+	pthread_mutex_lock(&ari->eat);
+	ari->last_eat = ft_clock();
+	pthread_mutex_unlock(&ari->eat);
+	ft_sleep(ari->time_to_eat);
+	pthread_mutex_lock(&ari->lunches_p);
+	ari->lunches++;
+	pthread_mutex_unlock(&ari->lunches_p);
+	unlock_forks(ari);
 	return (0);
 }
 
