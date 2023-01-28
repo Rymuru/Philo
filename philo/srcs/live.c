@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/27 19:11:29 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/28 01:45:11 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ void	lock_forks(t_philo *phi)
 {
 	if (phi->thread_id % 2 == 0)
 	{
+		pthread_mutex_lock(&phi->left_fork);
+		protect_print(phi->data, phi->thread_id, "has taken a fork");
 		pthread_mutex_lock(phi->right_fork);
 		protect_print(phi->data, phi->thread_id, "has taken a fork");
-		pthread_mutex_lock(&phi->left_fork);
 	}
 	else
 	{
+		pthread_mutex_lock(phi->right_fork);
+		protect_print(phi->data, phi->thread_id, "has taken a fork");
 		pthread_mutex_lock(&phi->left_fork);
 		protect_print(phi->data, phi->thread_id, "has taken a fork");
-		pthread_mutex_lock(phi->right_fork);
 	}
 }
 
@@ -32,13 +34,13 @@ void	unlock_forks(t_philo *phi)
 {
 	if (phi->thread_id % 2 == 0)
 	{
-		pthread_mutex_unlock(&phi->left_fork);
 		pthread_mutex_unlock(phi->right_fork);
+		pthread_mutex_unlock(&phi->left_fork);
 	}
 	else
 	{
-		pthread_mutex_unlock(phi->right_fork);
 		pthread_mutex_unlock(&phi->left_fork);
+		pthread_mutex_unlock(phi->right_fork);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/27 19:03:58 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/28 01:41:59 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,17 @@ int	init_data(t_data *data, char **av)
 {
 	data->death = 0;
 	data->current = 0;
-	if (av[1] == 0 || av[2] == 0 || av[3] == 0 || av[4] == 0)
-		return (1);
 	data->philo = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
-	{
-		if (av[5] == 0)
-			return (1);
 		data->lunches = ft_atoi(av[5]);
-	}
 	else
 		data->lunches = -1;
-	data->start = ft_clock();
+	if (data->philo == 0 || data->time_to_die == 0 || data->time_to_eat == 0
+		|| data->time_to_sleep == 0 || data->lunches == 0)
+		return (1);
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->write, NULL);
 	pthread_mutex_init(&data->watcher, NULL);
