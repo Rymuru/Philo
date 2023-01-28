@@ -6,7 +6,7 @@
 #    By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/12 02:52:38 by bcoenon           #+#    #+#              #
-#    Updated: 2023/01/28 00:14:17 by bcoenon          ###   ########.fr        #
+#    Updated: 2023/01/28 06:12:54 by bcoenon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ NAME_1	= philo
 CC		= clang
 RM		= rm -rf
 
-CFLAGS	= -Wall -Wextra -Werror -O3
+CFLAGS	= -Wall -Wextra -Werror
 
 # *======== RULES ========*
 

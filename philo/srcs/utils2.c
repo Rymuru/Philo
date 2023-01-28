@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:11:26 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/25 16:27:33 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/28 05:57:41 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 int	check_death(t_data *data, t_philo *ari)
 {
 	pthread_mutex_lock(&ari->eat);
-	if (ft_clock() - ari->last_eat > data->time_to_die)
+	pthread_mutex_lock(&ari->lunches_p);
+	if (ft_clock() - ari->last_eat > data->time_to_die
+		&& ari->lunches != data->lunches)
 	{
+		pthread_mutex_unlock(&ari->lunches_p);
 		pthread_mutex_unlock(&ari->eat);
 		pthread_mutex_lock(&data->watcher);
 		data->death = 1;
@@ -28,7 +31,10 @@ int	check_death(t_data *data, t_philo *ari)
 		return (1);
 	}
 	else
+	{
+		pthread_mutex_unlock(&ari->lunches_p);
 		pthread_mutex_unlock(&ari->eat);
+	}
 	return (0);
 }
 
