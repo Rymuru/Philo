@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/28 01:41:59 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/28 22:36:37 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*init_philos(t_data *data)
 		ecclesia[current].time_to_die = data->time_to_die;
 		ecclesia[current].time_to_eat = data->time_to_eat;
 		ecclesia[current].time_to_sleep = data->time_to_sleep;
-		ecclesia[current].thread_id = current;
+		ecclesia[current].thread_id = current + 1;
 		ecclesia[current].lunches = 0;
 		ecclesia[current].data = data;
 		pthread_mutex_init(&ecclesia[current].left_fork, NULL);
