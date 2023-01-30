@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:20:08 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/28 06:12:27 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/30 17:14:15 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ int	live(t_philo *ari)
 	{
 		protect_print(ari->data, ari->thread_id, "is sleeping");
 		ft_sleep(ari->time_to_sleep);
+	}
+	if (is_someone_dead(ari->data) == 0)
+	{
 		protect_print(ari->data, ari->thread_id, "is thinking");
 		ft_sleep((ari->data->time_to_die - (ari->data->time_to_eat \
 		+ ari->data->time_to_sleep)) / 2);

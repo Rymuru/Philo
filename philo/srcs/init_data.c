@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/28 22:36:37 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/30 15:23:45 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ void	init_right_fork(t_philo *ecclesia, int current)
 	}
 }
 
+int	init_philo_mutex(t_philo *ari)
+{
+	if (pthread_mutex_init(&ari->left_fork, NULL) == 1)
+		return (1);
+	if (pthread_mutex_init(&ari->eat, NULL) == 1)
+		return (1);
+	if (pthread_mutex_init(&ari->lunches_p, NULL) == 1)
+		return (1);
+	return (0);
+}
+
 void	*init_philos(t_data *data)
 {
 	int		current;
@@ -31,9 +42,7 @@ void	*init_philos(t_data *data)
 	current = 0;
 	ecclesia = malloc(data->philo * (sizeof(t_philo)));
 	if (!ecclesia)
-	{
 		return (NULL);
-	}
 	while (current < data->philo)
 	{
 		ecclesia[current].time_to_die = data->time_to_die;
@@ -42,13 +51,26 @@ void	*init_philos(t_data *data)
 		ecclesia[current].thread_id = current + 1;
 		ecclesia[current].lunches = 0;
 		ecclesia[current].data = data;
-		pthread_mutex_init(&ecclesia[current].left_fork, NULL);
-		pthread_mutex_init(&ecclesia[current].eat, NULL);
-		pthread_mutex_init(&ecclesia[current].lunches_p, NULL);
+		if (init_philo_mutex(&ecclesia[current]) == 1)
+		{
+			free(ecclesia);
+			return (NULL);
+		}
 		++current;
 	}
 	init_right_fork(ecclesia, current - 1);
 	return (ecclesia);
+}
+
+int	init_data_mutex(t_data *data)
+{
+	if (pthread_mutex_init(&data->lock, NULL) == 1)
+		return (1);
+	if (pthread_mutex_init(&data->write, NULL) == 1)
+		return (1);
+	if (pthread_mutex_init(&data->watcher, NULL) == 1)
+		return (1);
+	return (0);
 }
 
 int	init_data(t_data *data, char **av)
@@ -66,8 +88,7 @@ int	init_data(t_data *data, char **av)
 	if (data->philo == 0 || data->time_to_die == 0 || data->time_to_eat == 0
 		|| data->time_to_sleep == 0 || data->lunches == 0)
 		return (1);
-	pthread_mutex_init(&data->lock, NULL);
-	pthread_mutex_init(&data->write, NULL);
-	pthread_mutex_init(&data->watcher, NULL);
+	if (init_data_mutex(data) == 1)
+		return (1);
 	return (0);
 }
