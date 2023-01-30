@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 15:11:26 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/28 05:57:41 by bcoenon          ###   ########.fr       */
+/*   Created: 2023/01/30 18:42:33 by bcoenon           #+#    #+#             */
+/*   Updated: 2023/01/30 19:37:33 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,21 @@ void	ft_sleep(uint64_t delay)
 	start = ft_clock();
 	while (ft_clock() - start < delay)
 		usleep(100);
+}
+
+void	ft_destroy(t_data *data, t_philo *ecclesia)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philo)
+	{
+		pthread_mutex_destroy(&ecclesia[i].eat);
+		pthread_mutex_destroy(&ecclesia[i].lunches_p);
+		pthread_mutex_destroy(&ecclesia[i].left_fork);
+		++i;
+	}
+	pthread_mutex_destroy(&data->lock);
+	pthread_mutex_destroy(&data->write);
+	pthread_mutex_destroy(&data->watcher);
 }

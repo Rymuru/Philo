@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:15:46 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/30 15:23:45 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/30 20:31:03 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,30 @@ void	init_right_fork(t_philo *ecclesia, int current)
 	}
 }
 
-int	init_philo_mutex(t_philo *ari)
+int	init_philo_mutex(t_philo *ari, t_data *data)
 {
+	int	value;
+
+	value = 0;
 	if (pthread_mutex_init(&ari->left_fork, NULL) == 1)
-		return (1);
+		value = 1;
 	if (pthread_mutex_init(&ari->eat, NULL) == 1)
-		return (1);
+	{
+		pthread_mutex_destroy(&ari->left_fork);
+		value = 1;
+	}
 	if (pthread_mutex_init(&ari->lunches_p, NULL) == 1)
-		return (1);
+	{
+		pthread_mutex_destroy(&ari->left_fork);
+		pthread_mutex_destroy(&ari->eat);
+		value = 1;
+	}
+	if (value == 1)
+	{
+		pthread_mutex_destroy(&data->lock);
+		pthread_mutex_destroy(&data->write);
+		pthread_mutex_destroy(&data->watcher);
+	}
 	return (0);
 }
 
@@ -51,7 +67,7 @@ void	*init_philos(t_data *data)
 		ecclesia[current].thread_id = current + 1;
 		ecclesia[current].lunches = 0;
 		ecclesia[current].data = data;
-		if (init_philo_mutex(&ecclesia[current]) == 1)
+		if (init_philo_mutex(&ecclesia[current], data) == 1)
 		{
 			free(ecclesia);
 			return (NULL);
@@ -67,9 +83,16 @@ int	init_data_mutex(t_data *data)
 	if (pthread_mutex_init(&data->lock, NULL) == 1)
 		return (1);
 	if (pthread_mutex_init(&data->write, NULL) == 1)
+	{
+		pthread_mutex_destroy(&data->lock);
 		return (1);
+	}
 	if (pthread_mutex_init(&data->watcher, NULL) == 1)
+	{
+		pthread_mutex_destroy(&data->lock);
+		pthread_mutex_destroy(&data->write);
 		return (1);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:18:29 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/30 17:14:36 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/30 20:13:53 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,19 @@ int	hades(t_data *data, t_philo *ecclesia)
 	return (0);
 }
 
-void	launch_threads(pthread_t *illiade, t_data *data, t_philo *ecclesia)
+int	close_threads(pthread_t *illiade, int current, int value)
+{
+	while (current >= 0)
+	{
+		pthread_join(illiade[current], NULL);
+		--current;
+	}
+	if (value == 1)
+		write(2, "fail to create threads\n", 24);
+	return (value);
+}
+
+int	launch_threads(pthread_t *illiade, t_data *data, t_philo *ecclesia)
 {
 	int	philo;
 
@@ -45,9 +57,11 @@ void	launch_threads(pthread_t *illiade, t_data *data, t_philo *ecclesia)
 	pthread_mutex_lock(&data->lock);
 	while (philo < data->philo)
 	{
-		pthread_create(&illiade[philo], NULL, &routine, &ecclesia[philo]);
+		if (pthread_create(&illiade[philo], NULL, &routine, &ecclesia[philo]))
+			return (close_threads(illiade, philo, 1));
 		++philo;
 	}
+	--philo;
 	data->start = ft_clock();
 	pthread_mutex_unlock(&data->lock);
 	ft_sleep(data->time_to_die - 10);
@@ -55,10 +69,6 @@ void	launch_threads(pthread_t *illiade, t_data *data, t_philo *ecclesia)
 	{
 		usleep(100);
 	}
-	philo = 0;
-	while (philo < data->philo)
-	{
-		pthread_join(illiade[philo], NULL);
-		++philo;
-	}
+	usleep(data->time_to_eat * 1000);
+	return (close_threads(illiade, philo, 0));
 }
