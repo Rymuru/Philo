@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:13:59 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/24 15:12:44 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:08:01 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ uint64_t	ft_clock(void)
 
 	if (gettimeofday(&tv, NULL) == -1)
 	{
-		write(2, "Error: gettimeofday error.\n", 28);
+		write(2, "Error: gettimeofday error.\n", 27);
 		return (-1);
 	}
 	return ((tv.tv_usec / 1000) + (tv.tv_sec * 1000));

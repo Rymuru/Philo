@@ -6,7 +6,7 @@
 /*   By: bcoenon <bcoenon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:29:20 by bcoenon           #+#    #+#             */
-/*   Updated: 2023/01/30 19:53:41 by bcoenon          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:09:16 by bcoenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	error_manager(int error)
 {
 	if (error == 1)
-		write(2, "shouldn't use 0 as parameter\n", 30);
+		write(2, "shouldn't use 0 as parameter\n", 29);
 	else if (error == 2)
-		write(2, "can't malloc philo\n", 20);
+		write(2, "can't malloc philo\n", 19);
 	else if (error == 3)
-		write(2, "can't malloc threads\n", 22);
+		write(2, "can't malloc threads\n", 21);
 	return (1);
 }
 
@@ -30,12 +30,12 @@ int	check_arg(int ac, char **av)
 	i = 1;
 	if (ac != 5 && ac != 6)
 	{
-		write(2, "invalid number of arguments\n", 29);
+		write(2, "invalid number of arguments\n", 28);
 		return (1);
 	}
 	if (is_all_num(av) == 1)
 	{
-		write(2, "not numbers\n", 13);
+		write(2, "not numbers\n", 12);
 		return (1);
 	}
 	if (ft_atoi(av[i]) == 0)
